@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <h1>Data Binding with D3.js</h1>
+    <div id="chart"></div>
+
+    <script>
+        // Sample data
+        const data = [10, 20, 30, 40, 50, 40, 30 ,20,10];
+
+        // Select the 'chart' div
+        const chart = d3.select("#chart");
+
+        // Create an SVG container
+        const svg = chart.append("svg")
+            .attr("width", 800)
+            .attr("height", 800);
+
+        // Bind data to circles
+        const circles = svg.selectAll("circle")
+            .data(data);
+
+        // Enter selection for new data points
+        circles.enter()
+            .append("circle")
+            .attr("cx", (d, i) => (i * 80) + 50)
+            .attr("cy", (d, i) => (i * 80) + 50)
+            .attr("r", (d) => d)
+            .attr("fill", "blue")
+            // Mouse hover effect
+            .on("mouseover", function () {
+                d3.select(this)
+                    .attr("fill", "yellow");
+            })
+            .on("mouseout", function () {
+                d3.select(this)
+                    .attr("fill", "blue");
+            })
+            // Mouse click effect
+            .on("click", function () {
+                d3.select(this)
+                    .attr("fill", "green");
+            });
+
+        // Update selection for existing data points
+        circles
+            .attr("r", (d) => d)
+            .attr("fill", "green");
+
+        // Exit selection for removed data points
+        circles.exit().remove();
+    </script>
+</body>
+</html>

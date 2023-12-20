@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .axis-label {
+        font-size: 12px;
+    }
+</style>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+
+<svg width="800" height="400">
+    <g transform="translate(50, 0)" class="x-axis"></g>
+    <g transform="translate(30, 10)" class="y-axis"></g>
+    <g transform="translate(50, 20)" class="bar-chart"></g>
+</svg>
+
+<script>
+    // Sample data with labels and values
+    var data = [
+        { label: 'Category A', value: 30 },
+        { label: 'Category B', value: 50 },
+        { label: 'Category C', value: 40 },
+        { label: 'Category D', value: 60 },
+        { label: 'Category E', value: 25 },
+        // Add more data points with labels and values
+    ];
+
+    // Create X and Y scales
+    var xScale = d3.scaleBand()
+        .domain(data.map(function(d) { return d.label; }))
+        .range([0, 700])
+        .padding(0.1);
+
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) { return d.value; })])
+        .range([0, 300]);
+
+    // Create X and Y axes
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale);
+
+    d3.select('.x-axis')
+        .call(xAxis);
+
+    d3.select('.y-axis')
+        .call(yAxis);
+
+    var barChart = d3.select('.bar-chart');
+
+    // Create custom SVG icons for each bar
+    barChart.selectAll('rect.bar')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('x', function (d) { return xScale(d.label); })
+        .attr('y', function (d) { return 300 - yScale(d.value); })
+        .attr('width', xScale.bandwidth())
+        .attr('height', function (d) { return yScale(d.value); })
+        .attr('fill', 'blue'); // Adjust the bar color as needed
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .axis-label {
+        font-size: 12px;
+    }
+</style>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+<h1> Task 10 </h1>
+
+<svg width="700" height="220">
+    <g transform="translate(50, 170)" class="x-axis"></g>
+    <g transform="translate(30, 20)" class="y-axis"></g>
+    <g transform="translate(50, 40)" class="plot-area"></g>
+    <g class="label"></g>
+</svg>
+
+<script>
+    d3.csv('height.csv').then(function(data) {
+        var heights = data.map(function(d) {
+            return +d['Heights'];
+        });
+
+        // Create X and Y scales
+        var xScale = d3.scaleLinear()
+            .domain([0, heights.length ])
+            .range([1, 600]);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(heights)])
+            .range([100, 0]);
+
+        // Define a color scale based on heights
+        var colorScale = d3.scaleLinear()
+            .domain([0, d3.max(heights)])
+            .range(["blue", "red"]);
+
+        // Create X and Y axes
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(yScale)
+            .ticks(5);
+
+        d3.select('.x-axis')
+            .call(xAxis);
+
+        d3.select('.y-axis')
+            .call(yAxis);
+
+        var data = heights.map(function (d, i) {
+            return { height: d, x: i };
+        });
+
+        var plotArea = d3.select('.plot-area');
+
+        // Create stickman figures
+        var selectedStickman = null; // Store the selected stickman for label
+        var label = d3.select('.label'); // Select the label group
+
+        var labelRect = label.append('rect')
+            .attr('width', 30)
+            .attr('height', 20)
+            .attr('fill', 'gray');
+
+        var labelText = label.append('text')
+            .attr('x', 5)
+            .attr('y', 15)
+            .attr('font-size', 10)
+            .attr('fill', 'black');
+
+        plotArea.selectAll('.stickman')
+            .data(data)
+            .enter()
+            .append('g')
+            .attr('class', 'stickman')
+            .attr('transform', function (d) {
+                return 'translate(' + xScale(d.x) + ',' + yScale(d.height) + ')';
+            })
+            .each(function (d) {
+                var stickman = d3.select(this);
+
+                // Calculate proportional sizes
+                var headSize = d.height / 4.5;
+                var bodyHeight = d.height / 3;
+                var armLength = d.height / 4;
+                var legLength = d.height / 3;
+                var legGap = d.height / 4;
+
+                // Body
+                stickman.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', headSize -10)
+                    .attr('x2', 0)
+                    .attr('y2', headSize + bodyHeight)
+                    .attr('stroke', colorScale(d.height));
+
+                // Arms
+                stickman.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', headSize + bodyHeight / 2)
+                    .attr('x2', -armLength)
+                    .attr('y2', headSize + bodyHeight / 2 - armLength)
+                    .attr('stroke', colorScale(d.height));
+
+                stickman.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', headSize + bodyHeight / 2 )
+                    .attr('x2', armLength)
+                    .attr('y2', headSize + bodyHeight / 2 - armLength)
+                    .attr('stroke', colorScale(d.height));
+
+                // Legs
+                stickman.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', headSize + bodyHeight)
+                    .attr('x2', -legLength + legGap / 2)
+                    .attr('y2', headSize + bodyHeight + legLength)
+                    .attr('stroke', colorScale(d.height));
+
+                stickman.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', headSize + bodyHeight)
+                    .attr('x2', legLength - legGap / 2)
+                    .attr('y2', headSize + bodyHeight + legLength)
+                    .attr('stroke', colorScale(d.height));
+
+                // Head
+				label.style('display', 'none');
+                stickman.append('circle')
+                    .attr('cx', 0)
+                    .attr('cy', bodyHeight-headSize-10 ) // Move the head above the body
+                    .attr('r', headSize)
+                    .attr('fill', colorScale(d.height))
+                    .on('mouseover', function () {
+                        d3.select(this).attr('r', headSize + 5);
+                    })
+                    .on('mouseout', function () {
+                        d3.select(this).attr('r', headSize);
+                        label.style('display', 'none');
+                    })
+                    .on('click', function () {
+                        d3.select(this).attr('fill', colorScale(d.height));
+                        selectedStickman = d;
+                        label.style('display', 'block');
+                        label.attr('transform', 'translate(' + (xScale(selectedStickman.x)) + ',' + (yScale(selectedStickman.height) - 5) + ')');
+                        labelText.text(selectedStickman.height);
+                    });
+            });
+    });
+</script>
+</body>
+</html>

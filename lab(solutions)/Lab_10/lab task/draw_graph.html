@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        #canvas {
+            width: 800px;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <svg id="canvas"></svg>
+    </div>
+    <button id="AddCircle">Add Circle</button>
+    <button id="joinButton">Join Circles</button>
+
+    <script>
+        var svg = d3.select("svg");
+        var circles = []; // Store information about created circles
+        var drawingMode = true; // Enable drawing mode by default
+        var selectedCircles = []; // Store selected circles for joining
+
+        // Function to create a circle at the clicked position
+        function createCircle(event) {
+            var coordinates = d3.pointer(event); // Get mouse click coordinates
+            var circle = svg.append("circle")
+                .attr("cx", coordinates[0]) // X position
+                .attr("cy", coordinates[1]) // Y position
+                .attr("r", 20) // Radius
+                .attr("fill", getRandomColor()) // Fill color
+                .on("click", function() {
+                    if (!drawingMode) {
+                        selectCircle(this);
+                    }
+                });
+
+            circles.push(circle);
+        }
+
+        // Function to select and connect circles
+        function selectCircle(circle) {
+            if (!drawingMode) {
+                var selectedCircle = d3.select(circle);
+                selectedCircles.push(selectedCircle);
+
+                if (selectedCircles.length === 2) {
+                    // Create an edge (line) between the two selected circles
+                    var line = svg.append("line")
+                        .attr("x1", selectedCircles[0].attr("cx"))
+                        .attr("y1", selectedCircles[0].attr("cy"))
+                        .attr("x2", selectedCircles[1].attr("cx"))
+                        .attr("y2", selectedCircles[1].attr("cy"))
+                        .attr("stroke", getRandomColor()) // Set a random stroke color
+                        .attr("stroke-width", 5);
+
+                    // Clear the selected circles array
+                    selectedCircles = [];
+                }
+            }
+        }
+
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Function to toggle between drawing and joining modes
+        function toggleMode() {
+            drawingMode = !drawingMode;
+        }
+
+        // Add event listeners to the buttons
+        d3.select("#AddCircle").on("click", toggleMode);
+        d3.select("#joinButton").on("click", toggleMode);
+
+        // Add a click event listener to the SVG to create a circle on click
+        svg.on("click", function(event) {
+            if (drawingMode) {
+                createCircle(event);
+            }
+        });
+    </script>
+</body>
+</html>

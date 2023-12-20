@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://d3js.org/d3.v6.min.js">
+    </script>
+    <style>
+    
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+rect {
+  fill:orangered;
+  cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+  <svg width="760" height="190">
+		<g transform="translate(70, 20)">
+			<rect width="30" height="30" y="0" />
+			<rect width="30" height="30" y="40" />
+			<rect width="30" height="30" y="80" />
+			<rect width="30" height="30" y="120" />
+		</g>
+	</svg>
+
+	<div>
+		<button onClick="update();">Update location</button>
+	</div>
+
+</body>
+
+<script>
+ 
+ function update() {
+	d3.selectAll('rect')
+		.attr('x', function(d, i) {
+			return i * 40;
+		})
+       
+		.attr('rx', function() {
+			return 20;
+		})    
+		.attr('ry', function() {
+			return 20;
+		}
+         );
+}
+	
+
+</script>
+</html>

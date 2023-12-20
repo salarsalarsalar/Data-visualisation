@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Force-Directed Graph Example</title>
+    <!-- Include D3.js from CDN -->
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        /* Add some basic styling for the links and nodes */
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+        }
+
+        .node {
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    const nodes = [
+        { id: 1, name: 'Node 1' },
+        { id: 2, name: 'Node 2' },
+        { id: 3, name: 'Node 3' },
+        { id: 4, name: 'Node 4' },
+        { id: 5, name: 'Node 5' }
+    ];
+
+    const links = [
+        { source: 1, target: 2 },
+        { source: 2, target: 3 },
+        { source: 3, target: 4 },
+        { source: 4, target: 5 },
+        { source: 5, target: 1 }
+    ];
+
+    // Set up the SVG container
+    const svgWidth = 500;
+    const svgHeight = 300;
+
+    // Create the SVG element
+    const svg = d3.select("body").append("svg")
+        .attr("width", svgWidth)
+        .attr("height", svgHeight);
+
+    // Create the force simulation
+    const simulation = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(50))
+        .force('charge', d3.forceManyBody().strength(-100))
+        .force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2));
+
+    // Create the links
+    const link = svg.selectAll('.link')
+        .data(links)
+        .enter().append('line')
+        .attr('class', 'link');
+
+    // Create the nodes
+    const node = svg.selectAll('.node')
+        .data(nodes)
+        .enter().append('circle')
+        .attr('class', 'node')
+        .attr('r', 10);
+
+    // Add drag functionality to nodes
+    node.call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended));
+
+    // Update the positions of nodes and links in each tick of the simulation
+    simulation.on('tick', () => {
+        link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+        node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
+    });
+
+    // Functions for drag behavior
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enhanced JavaScript Program</title>
+</head>
+<body>
+    <h1>JavaScript Program</h1>
+    
+    <button id="changeTextButton">Click me!</button>
+    
+    <p id="outputText" style="color:red;">This is the initial text.</p>
+
+    <script>
+        // JavaScript code
+        document.getElementById("changeTextButton").addEventListener("click", function() {
+            // When the button is clicked, change the text of the paragraph
+            document.getElementById("outputText").innerHTML = "Text has been changed!";
+            
+            // Show an alert
+            //alert("Text Changed!");
+        });
+
+        document.getElementById("changeTextButton").addEventListener("dblclick", function() {
+            // When the button is double-clicked, change the background color
+            document.body.style.backgroundColor = getRandomColor();
+        });
+
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>

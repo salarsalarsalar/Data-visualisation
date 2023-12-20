@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator with Method Chaining</title>
+    <style>
+        input[type="number"] {
+            width: 80px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <label > Enter Number 
+    <input type="number" id="numberInput1">
+    </label>
+    <label>Enter 2 number
+    <input type="number" id="numberInput2">
+    </label>
+    <button id="addButton">Add</button>
+    <button id="subtractButton">Subtract</button>
+    <button id="multiplyButton">Multiply</button>
+    <button id="divideButton">Divide</button>
+    <p id="result">Result: </p>
+
+    <script>
+        // Calculator object with method chaining
+        const calculator = {
+            result: 0,
+            add: function (number) {
+                this.result += number;
+                return this; // Return the object for chaining
+            },
+            subtract: function (number) {
+                this.result -= number;
+                return this; // Return the object for chaining
+            },
+            multiply: function (number) {
+                this.result *= number;
+                return this; // Return the object for chaining
+            },
+            divide: function (number) {
+                if (number !== 0) {
+                    this.result /= number;
+                }
+                return this; // Return the object for chaining
+            },
+            displayResult: function () {
+                document.getElementById("result").textContent = `Result: ${this.result}`;
+                return this; // Return the object for chaining
+            },
+        };
+
+        // Event handling
+        document.getElementById("addButton").addEventListener("click", function () {
+            const number1 = parseFloat(document.getElementById("numberInput1").value);
+            const number2 = parseFloat(document.getElementById("numberInput2").value);
+            if (!isNaN(number1) && !isNaN(number2)) {
+                calculator.result = number1; // Initialize result with the first number
+                calculator.add(number2).displayResult();
+            }
+        });
+
+        document.getElementById("subtractButton").addEventListener("click", function () {
+            const number1 = parseFloat(document.getElementById("numberInput1").value);
+            const number2 = parseFloat(document.getElementById("numberInput2").value);
+            if (!isNaN(number1) && !isNaN(number2)) {
+                calculator.result = number1; // Initialize result with the first number
+                calculator.subtract(number2).displayResult();
+            }
+        });
+
+        document.getElementById("multiplyButton").addEventListener("click", function () {
+            const number1 = parseFloat(document.getElementById("numberInput1").value);
+            const number2 = parseFloat(document.getElementById("numberInput2").value);
+            if (!isNaN(number1) && !isNaN(number2)) {
+                calculator.result = number1; // Initialize result with the first number
+                calculator.multiply(number2).displayResult();
+            }
+        });
+
+        document.getElementById("divideButton").addEventListener("click", function () {
+            const number1 = parseFloat(document.getElementById("numberInput1").value);
+            const number2 = parseFloat(document.getElementById("numberInput2").value);
+            if (!isNaN(number1) && !isNaN(number2) && number2 !== 0) {
+                calculator.result = number1; // Initialize result with the first number
+                calculator.divide(number2).displayResult();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #455152;
+    }
+    
+    .calculator {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 10px;
+        font-size: 24px;
+        padding: 5px;
+        background-color: rgb(195, 243, 195);
+        color: rgb(0, 0, 0);
+    }
+    
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+    
+    button {
+        width: 100%;
+        height: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #02121d;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    
+</style>
+    
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <!-- Add the button-hover class for hover effect -->
+            <button onclick="appendToDisplay('7')" class="button-hover">7</button>
+            <button onclick="appendToDisplay('8')" class="button-hover">8</button>
+            <button onclick="appendToDisplay('9')" class="button-hover">9</button>
+            <button onclick="appendToDisplay('+')" class="button-hover">+</button>
+            <button onclick="appendToDisplay('4')" class="button-hover">4</button>
+            <button onclick="appendToDisplay('5')" class="button-hover">5</button>
+            <button onclick="appendToDisplay('6')" class="button-hover">6</button>
+            <button onclick="appendToDisplay('-')" class="button-hover">-</button>
+            <button onclick="appendToDisplay('1')" class="button-hover">1</button>
+            <button onclick="appendToDisplay('2')" class="button-hover">2</button>
+            <button onclick="appendToDisplay('3')" class="button-hover">3</button>
+            <button onclick="appendToDisplay('*')" class="button-hover">*</button>
+            <button onclick="appendToDisplay('0')" class="button-hover">0</button>
+            <button onclick="calculate()" class="button-hover">=</button>
+            <button onclick="appendToDisplay('/')" class="button-hover">/</button>
+        </div>
+    </div>
+    
+    <script>
+        let displayValue = "";
+
+        function appendToDisplay(value) {
+            displayValue += value;
+            document.getElementById("display").value = displayValue;
+        }
+
+        function clearDisplay() {
+            displayValue = "";
+            document.getElementById("display").value = "";
+        }
+
+        function calculate() {
+            try {
+                displayValue = eval(displayValue);
+                document.getElementById("display").value = displayValue;
+            } catch (error) {
+                document.getElementById("display").value = "Error";
+                setTimeout(clearDisplay, 1000);
+            }
+        }
+
+      Add event listeners for button hover effect
+      const buttons = document.querySelectorAll('.button-hover');
+        buttons.forEach(button => {
+           button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#29b954';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = '#3498db';
+            });
+        }); 
+    </script>
+</body>
+</html>

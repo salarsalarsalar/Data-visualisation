@@ -1,0 +1,96 @@
+/* Reset some default styles */
+h1
+{
+    color: brown;
+}
+body, h1, h2, ul, li, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply styles to header */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Style the main content */
+
+main {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.menu-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu-list li {
+    flex: 0 0 calc(33.33% - 20px);
+    margin: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-list img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+.price {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #7eca7e;
+}
+
+/* Add hover effect to menu items */
+.menu-list li:hover {
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+
+
+/* Style the footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    flex-flow: row;
+}

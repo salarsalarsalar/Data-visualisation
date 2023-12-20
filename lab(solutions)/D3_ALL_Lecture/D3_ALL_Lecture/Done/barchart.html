@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+<script>
+    var data = [5,100, 400, 200, 700, 850, 1000, 2000]; // Adjusted data
+
+    var barHeight = 40,
+        margin = 1;
+
+    var maxDataValue = d3.max(data); // Find the maximum data value
+
+    var width = maxDataValue + 50; // Adjusted width based on the maximum data value
+    var height = data.length * (barHeight + margin)*30; // Calculate height based on data length
+
+    var scale = d3.scaleLinear()
+        .domain([0, maxDataValue]) // Adjust the domain to start from 0
+        .range([0, maxDataValue]); // Adjust the range to match the width of the chart
+
+    var color = d3.scaleLinear()
+        .domain([0, maxDataValue])
+        .range(["red", "green"]);
+
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var bars = svg.selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("transform", function (d, i) {
+            return "translate(5," + i * (barHeight + margin) + ")";
+        });
+
+    bars.append("rect")
+        .attr("width", function (d) {
+            return scale(d);
+        })
+        .attr("height", barHeight - margin)
+        .attr("fill", function (d) { return color(d); });
+
+    bars.append("text")
+        .attr("x", function (d) {
+            // Position the text within the bar, centered relative to the bar's width
+            return scale(d) - (this.getBBox().width / 2);
+        })
+        .attr("fill", function (d) { return color(d); })
+        .attr("y", barHeight / 2)
+        .text(function (d) { return d; });
+
+    // Add a horizontal axis
+    var xAxis = d3.axisBottom(scale)
+        .ticks(5)
+        .tickFormat(d3.format(".0f"));
+var ly=(data.length*barHeight)+10;
+        svg.append("g")
+        .attr("transform","translate(5," + ly + ")") // Manually set the position
+        .call(xAxis)
+
+</script>
+</body>
+</html>

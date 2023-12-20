@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .axis-label {
+        font-size: 12px;
+    }
+
+    .label-box {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 5px;
+        position: absolute;
+        display: none;
+    }
+</style>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+<h1>TASK 10</h1>
+<svg width="700" height="700">
+    <g transform="translate(50, 150)" class="x-axis"></g>
+    <g transform="translate(30, 40)" class="y-axis"></g>
+    <g transform="translate(50, 52)" class="plot-area"></g>
+</svg>
+
+<script>
+    // Load data from an external CSV file
+    d3.csv('height.csv').then(function(data) {
+        var heights = data.map(function(d) {
+            return +d['Heights'];
+        });
+
+        // Create X and Y scales
+        var xScale = d3.scaleLinear()
+            .domain([0, heights.length - 1])
+            .range([0, 600]);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(heights)])
+            .range([100, 0]);
+
+        // Define a color scale based on heights
+        var colorScale = d3.scaleLinear()
+            .domain([0, d3.max(heights)])
+            .range(["red", "purple"]);
+
+        // Create X and Y axes
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(yScale).ticks(5);
+
+        d3.select('.x-axis').call(xAxis);
+        d3.select('.y-axis').call(yAxis);
+
+        var plotArea = d3.select('.plot-area');
+
+        var flowerGroups = plotArea.selectAll('.flower')
+            .data(heights)
+            .enter()
+            .append('g')
+            .attr('class', 'flower')
+            .attr('transform', function(d, i) {
+                return 'translate(' + xScale(i) + ',' + yScale(d) + ')';
+            });
+
+        function generatePetalPath(height) {
+            // Create a path generator for petals with sizes proportional to height
+            var petalPath = `M0 -${height / 4} 
+                C${height / 20} -${height / 10}, ${height / 20} ${height / 10}, 0 ${height / 4} 
+                C-${height / 20} ${height / 10}, -${height / 20} -${height / 10}, 0 -${height / 4} 
+                M0 ${height / 4} 
+                Q0 ${height / 2} 0 ${height / 4}`;
+            return petalPath;
+        }
+
+        flowerGroups.each(function (d) {
+            var flower = d3.select(this);
+
+            var petalPath = generatePetalPath(d);
+
+            // Create a stem for each flower
+          var line=  flower.append('line')
+                .attr('x1', 0)
+                .attr('y1', 0)
+                .attr('x2', 0)
+                .attr('y2', d - 12) // Adjust the stem length
+                .attr('stroke', 'green')
+                .attr('stroke-width', 2);
+			
+			
+
+            // Create a group for all petals
+            var petalsGroup = flower.append('g')
+                .attr('class', 'petals-group');
+
+            // Create six petals for each flower with adjustable size
+            for (var i = 0; i < 6; i++) {
+                petalsGroup.append('path')
+                    .attr('d', petalPath)
+                    .attr('transform', 'rotate(' + (i * 60) + ')')
+                    .attr('fill', colorScale(d));
+            }
+
+            // Create a center circle for each flower with proportional size
+            flower.append('circle')
+                .attr('cx', 0)
+                .attr('cy', 0)
+                .attr('r', d / 20)
+                .attr('fill', 'yellow')
+                .on('mouseover', function () {
+                    d3.select(this)
+                        .attr('r', d / 10);
+                })
+                .on('mouseout', function () {
+                    d3.select(this)
+                        .attr('r', d / 20);
+                    hideLabel();
+                })
+                .on('click', function () {
+                    showLabel(d, flower);
+                });
+            hideLabel();
+        });
+    });
+
+    function showLabel(height, flower) {
+        var labelBox = flower.append('text')
+            .attr('x', 0)
+            .attr('y', -20)
+            .text('Height: ' + height + ' cm')
+            .attr('class', 'label-box')
+            .style('background', 'white')
+            .style('border', '1px solid #ccc')
+            .style('padding', '5px')
+            .style('position', 'absolute')
+            .style('display', 'block');
+    }
+
+    function hideLabel() {
+        d3.select('.label-box').remove();
+    }
+</script>
+</body>
+</html>

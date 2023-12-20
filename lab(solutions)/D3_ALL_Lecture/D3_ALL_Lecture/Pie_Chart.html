@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Example</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <div id="pie-chart"></div>
+
+    <script>
+        // Data
+        var data = [
+            { label: "Category A", value: 30 },
+            { label: "Category B", value: 40 },
+            { label: "Category C", value: 20 },
+            { label: "Category D", value: 10 }
+        ];
+
+        var width = 500;
+        var height = 500;
+        var radius = 250;
+
+
+        var svg = d3.select("#pie-chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+      
+        var g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+   
+        var pie = d3.pie()
+            .sort(null)
+			//.sort(function(a, b) { return b.value - a.value; })//descending order
+			//.sort(function(a, b) { return a.value - b.value; })//ascending order
+            .value(function(d) { return d.value; });
+//console.log(pie(data));
+      
+        var arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius);
+			
+
+
+  
+        var path = g.selectAll("path")
+            .data(pie(data))
+            .enter()
+            .append("path")
+            .attr("d", arc)
+            .attr("fill", function(d, i) { return color(i); });
+
+        
+        var label = d3.arc()
+            .outerRadius(radius)
+            .innerRadius(180/2);
+
+        g.selectAll("text")
+            .data(pie(data))
+            .enter()
+            .append("text")
+            .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+            .text(function(d) { return d.data.label; });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart with Method Chaining</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul id="cartItems">
+        <!-- Shopping cart items will be displayed here -->
+    </ul>
+    <button id="addItemButton">Add Item</button>
+    <button id="removeItemButton">Remove Item</button>
+
+    <script>
+        // Shopping cart object with method chaining
+        const shoppingCart = {
+            items: [],
+            addItem: function (item) {
+                this.items.push(item);
+                return this; // Return the object for chaining
+            },
+            removeItem: function (item) {
+                const index = this.items.indexOf(item);
+                if (index !== -1) {
+                    this.items.splice(index, 1);
+                }
+                return this; // Return the object for chaining
+            },
+            displayCart: function () {
+                const cartItemsElement = document.getElementById("cartItems");
+                cartItemsElement.innerHTML = "";
+                this.items.forEach((item) => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    cartItemsElement.appendChild(li);
+                });
+                return this; // Return the object for chaining
+            },
+        };
+
+        // Event handling
+        document.getElementById("addItemButton").addEventListener("click", function () {
+            const itemName = prompt("Enter item name:");
+            if (itemName) {
+                shoppingCart.addItem(itemName).displayCart();
+            }
+        });
+
+        document.getElementById("removeItemButton").addEventListener("click", function () {
+            const itemName = prompt("Enter item name to remove:");
+            if (itemName) {
+                shoppingCart.removeItem(itemName).displayCart();
+            }
+        });
+    </script>
+</body>
+</html>

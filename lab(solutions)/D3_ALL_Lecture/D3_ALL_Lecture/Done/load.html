@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .axis-label {
+            font-size: 14px;
+        }
+
+        /* Style for rotating x-axis labels */
+        .x-axis text {
+            text-anchor: middle;
+            transform: rotate(-45deg);
+        }
+
+        /* Style for highlighting bars on hover */
+        .bar:hover {
+            stroke: yellow;
+        }
+
+        /* Style for showing the label on click */
+        .bar-label {
+            display: none;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <div id="chart"></div>
+
+    <script>
+        // Select the container where the visualization will be placed
+        const chartContainer = d3.select("#chart");
+
+        // Load the CSV file using D3's d3.csv function
+        d3.csv("employee_data.csv").then(function (data) {
+            // Print the loaded data to the console to check it
+            console.log(data);
+
+            // Define chart dimensions
+            const margin = { top: 20, right: 20, bottom: 50, left: 60 };
+            const width = 600 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            // Create a bar chart to visualize employee salaries
+            const svg = chartContainer.append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Find the maximum salary to use as a scaling factor
+            const maxSalary = d3.max(data, d => +d.Salary);
+
+            const xScale = d3.scaleBand()
+                .domain(data.map(d => d.EmployeeName))
+                .range([0, width])
+                .padding(0.1);
+
+            const yScale = d3.scaleLinear()
+                .domain([0, maxSalary]) // Use the maximum salary as the upper limit
+                .range([height, 0]); // Adjust the range
+
+            const xAxis = d3.axisBottom(xScale);
+            const yAxis = d3.axisLeft(yScale);
+
+            // Append x-axis with rotated labels
+            svg.append("g")
+                .attr("class", "x-axis")
+                .attr("transform", `translate(0, ${height})`) // Position at the bottom
+                .call(xAxis)
+                .selectAll("text")
+                .style("text-anchor", "middle");
+
+            // Append y-axis
+            svg.append("g")
+                .attr("class", "y-axis")
+                .call(yAxis);
+
+            // Add x-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", width / 2)
+                .attr("y", height + margin.top + 20)
+                .text("Employee Names");
+
+            // Add y-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", -margin.left)
+                .text("Salary");
+
+            // Append bars
+            svg.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", d => xScale(d.EmployeeName))
+                .attr("y", d => yScale(+d.Salary))
+                .attr("width", xScale.bandwidth())
+                .attr("height", d => height - yScale(+d.Salary))
+                .attr("fill", "steelblue")
+                .attr("class", "bar")
+       
+                .on("mouseover", function () {
+                    // Change stroke color on hover
+                    d3.select(this).attr("stroke", "yellow");
+                })
+                .on("mouseout", function () {
+                    // Restore original stroke color
+                    d3.select(this).attr("stroke", null);
+                });
+        });
+    </script>
+</body>
+</html>

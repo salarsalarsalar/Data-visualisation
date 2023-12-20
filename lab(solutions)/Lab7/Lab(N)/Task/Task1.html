@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Menu</title>
+</head>
+<body>
+    <h1>Order Menu</h1>
+
+    <form id="orderForm">
+        <!-- Item selection -->
+        <label for="menuItem">Select an item:</label>
+        <select id="menuItem">
+            <option value="burger">Burger</option>
+            <option value="pizza">Pizza</option>
+            <option value="pasta">Pasta</option>
+        </select>
+
+        <!-- Quantity input -->
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+
+        <!-- Toppings input -->
+        <label for="toppings">Toppings:</label>
+        <input type="text" id="toppings" placeholder="Enter toppings (comma-separated)">
+
+        <!-- Delivery instructions input -->
+        <label for="deliveryInstructions">Delivery Instructions:</label>
+        <textarea id="deliveryInstructions" rows="4" placeholder="Enter delivery instructions"></textarea>
+
+        <!-- Submit button -->
+        <button type="button" id="orderButton">Place Order</button>
+    </form>
+
+    <div id="orderSummary">
+        <!-- Order summary will appear here -->
+    </div>
+
+    <script>
+        // Function to calculate the total cost
+        function calculateTotalCost(item, quantity) {
+            let price;
+            switch (item) {
+                case "burger":
+                    price = 5.99;
+                    break;
+                case "pizza":
+                    price = 8.99;
+                    break;
+                case "pasta":
+                    price = 7.49;
+                    break;
+                default:
+                    price = 0;
+                    break;
+            }
+            return price * quantity;
+        }
+
+        // Event Handling
+        const orderForm = document.getElementById("orderForm");
+        const orderButton = document.getElementById("orderButton");
+        const orderSummary = document.getElementById("orderSummary");
+
+        orderButton.addEventListener("click", function () {
+            // Get values from the form
+            const selectedItem = document.getElementById("menuItem").value;
+            const selectedQuantity = parseInt(document.getElementById("quantity").value);
+            const selectedToppings = document.getElementById("toppings").value;
+            const deliveryInstructions = document.getElementById("deliveryInstructions").value;
+
+            // Calculate the total cost
+            const totalCost = calculateTotalCost(selectedItem, selectedQuantity);
+
+            // Display the order summary
+            orderSummary.innerHTML = `
+                <h2>Order Summary</h2>
+                <p>Item: ${selectedItem}</p>
+                <p>Quantity: ${selectedQuantity}</p>
+                <p>Toppings: ${selectedToppings}</p>
+                <p>Delivery Instructions: ${deliveryInstructions}</p>
+                <p>Total Cost: $${totalCost.toFixed(2)}</p>
+            `;
+        });
+
+        // Asynchronous JavaScript (Simulated with setTimeout)
+        setTimeout(() => {
+            alert("Welcome! Kindly place your order.");
+        }, 2000);
+    </script>
+</body>
+</html>

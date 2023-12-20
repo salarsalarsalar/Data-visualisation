@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+   .orange-circle {
+    fill: orange;
+}
+  </style>
+</head>
+<body>
+
+     <svg width="250" height="250">
+       <circle cx="50" cy="30" r="20" stroke="red" stroke-width="10" id="c1"/>
+       <circle cx="50" cy="80" r="20" stroke="blue" stroke-width="10" id="c2"/>
+       <circle cx="50" cy="130" r="20" stroke="green" stroke-width="10" id="c3"/>
+      </svg>
+      
+  <button onClick="addnew();"> Click Here</button>
+  <button onClick="clean();"> Click Here to remove svgs</button>
+
+    <script>
+      
+
+
+       var svg = d3.select("svg");
+         svg.append("text")
+           .attr("x",0)
+           .attr("y",240)
+           .text("Second paragraph.")
+		   .attr("fill","red");
+
+    svg.select("#c1").attr("fill","red");
+      function addnew(){
+        svg.selectAll("circle").remove();
+      svg.append("circle")
+      	 .attr("cx",200)
+      	 .attr("cy",30)
+      	 .attr("r",20)
+      	 .attr("stroke","orange")
+         .attr("stroke-width","5")
+         .attr("id","c4")
+      ;
+     
+      svg.append("circle")
+      	 .attr("cx",200)
+      	 .attr("cy",80)
+      	 .attr("r",20)
+      	 .attr("stroke","orange")
+         .attr("stroke-width","5");
+     
+      svg.append("circle")
+      	 .attr("cx",200)
+      	 .attr("cy",130)
+      	 .attr("r",20)
+      	 .attr("stroke","orange")
+         .attr("stroke-width","5");
+        }
+      function clean()
+      {
+        svg.select("circle").remove();
+      }
+      
+      
+                                           
+    </script>
+</body>
+</html>

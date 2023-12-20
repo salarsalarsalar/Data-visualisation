@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+
+    <p>This is errors.</p>
+    <p>This is warning.</p>
+
+<script>
+    d3.selectAll("p").style("color", function(d, i) {
+            var text = this.innerText;
+        
+            if (/error/.test(text)) {
+                return "red";
+            } else if (/warning/.test(text)) {
+                return "yellow";
+            }
+    });
+</script>
+</body>
+</html>

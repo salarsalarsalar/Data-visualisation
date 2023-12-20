@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Data Visualization with D3</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        /* Add your CSS styles here */
+        .bar {
+            fill: steelblue;
+        }
+
+        .bar:hover {
+            fill: orange;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chart"></div>
+
+<script>
+    // Set up the SVG container
+    const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", 400)
+        .attr("height", 200);
+
+    // Fetch data from JSON file
+    d3.json("data.json").then(function(jsonData) {
+
+        // Create scales
+        const xScale = d3.scaleBand()
+            .domain(jsonData.map(d => d.category))
+            .range([0, 400])
+            .padding(0.1);
+
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(jsonData, d => d.value)])
+            .range([200, 0]);
+
+        // Create bars
+        svg.selectAll("rect")
+            .data(jsonData)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", d => xScale(d.category))
+            .attr("y", d => yScale(d.value))
+            .attr("width", xScale.bandwidth())
+            .attr("height", d => 200 - yScale(d.value))
+            .on("mouseover", function (event, d) {
+                // Add tooltip or any other interactions here
+                d3.select(this).attr("fill", "red");
+            })
+            .on("mouseout", function () {
+                d3.select(this).attr("fill", "steelblue");
+            });
+    });
+</script>
+
+</body>
+</html>

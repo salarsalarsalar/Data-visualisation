@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Task 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            color: #FFF;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #FFD700; /* Golden */
+            color: #000;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #000000; /* Golden */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333; /* Dark Gray */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section 1 */
+        .section-1 {
+            padding: 20px;
+            background-color: #111; /* Almost Black */
+        }
+
+        /* Section 2 */
+        .section-2 {
+            padding: 20px;
+            background-color: #444; /* Dark Gray */
+        }
+
+        /* Section 3 */
+        .section-3 {
+            padding: 20px;
+            background-color: #222; /* Black */
+        }
+
+        /* Section 4 */
+        .section-4 {
+            padding: 20px;
+            background-color: #555; /* Dark Gray */
+        }
+
+        /* Table Section */
+        .section-5 {
+            padding: 20px;
+            background-color: #333; /* Dark Gray */
+        }
+
+        /* Div Section */
+        .section-6 {
+            padding: 20px;
+            background-color: #666; /* Gray */
+        }
+
+        /* List Section */
+        .section-7 {
+            padding: 20px;
+            background-color: #777; /* Slightly Lighter Gray */
+        }
+
+        /* Section 5 */
+        .section-5 {
+            padding: 20px;
+            background-color: #111; /* Almost Black */
+        }
+
+        img {
+            display: block;
+            margin: 30px auto;
+            border: 2px solid #FFD700; /* Golden */
+            max-width: 100%;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+
+        ol {
+            list-style-type: decimal;
+            margin-left: 20px;
+        }
+
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #FFF;
+        }
+
+        .div-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .div-box {
+            flex-basis: 48%;
+            padding: 10px;
+            background-color: #444; /* Dark Gray */
+        }
+
+        .italic-underline {
+            font-style: italic;
+            text-decoration: underline;
+            color: #FFD700; /* Golden */
+            font-size: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #FFD700; /* Golden */
+            color: #000;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .menu {
+            text-align: center;
+            background-color: #333; /* Dark Gray */
+            padding: 10px 0;
+        }
+
+        .menu a {
+            color: #FFF;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .menu a:hover {
+            color: #e4ee31; /* Green on hover */
+        }
+
+        .menu a.active {
+            color: #6AB726; /* Green when clicked */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Lab Task 2</h1>
+    </header>
+
+    <!-- Menu Bar -->
+    <div class="menu">
+        <a href="#section-1">Section 1</a>
+        <a href="#section-2">Section 2</a>
+        <a href="#section-3">Section 3</a>
+        <a href="#section-4">Section 4</a>
+        <a href="#section-5">Section 5</a>
+        <a href="#section-6">DSection 6</a>
+        <a href="#section-7">Section 7</a>
+        <a href="#section-8">Section 8</a>
+    </div>
+
+    <div class="container section-1" id="section-1">
+        <h2>Section 1 - HTML Formatting Tags</h2>
+        <p>
+            This is an example of <b>bold text</b> within a paragraph.
+            <strong>This text is important</strong> and should be emphasized.
+            You can also make text <i>italic</i> or <em>emphasized</em> for added effect.
+            <mark>This is marked text</mark>, which stands out.
+            You can use <small>smaller text</small> for fine print.
+            <del>This text has been deleted</del>, but <ins>new text has been inserted</ins> in its place.
+            You can create <sub>subscript text</sub> or <sup>superscript text</sup> for mathematical expressions.
+        </p>
+    </div>
+
+    <div class="container section-2" id="section-2">
+        <h2>Section 2 - Quote</h2>
+        <blockquote>
+            <p>"To be or not to be, that is the question."</p>
+        </blockquote>
+    </div>
+
+    <div class="container section-3" id="section-3">
+        <h2>Section 3 - Quotation with Cite</h2>
+        <blockquote>
+            <p>
+                "The only way to do great work is to love what you do.
+                If you haven't found it yet, keep looking. Don't settle.
+                As with all matters of the heart, you'll know when you find it."
+            </p>
+            <cite>
+                <a href="https://www.apple.com/" target="_blank" style="color: #FFD700;">Steve Jobs</a>
+            </cite>
+        </blockquote>
+    </div>
+
+    <div class="container section-4" id="section-4">
+        <h2>Section 4 - Image</h2>
+       <a href="#"><img src="1.jpg" alt="A Beautiful Image" title="Click to enlarge"></a> 
+    </div>
+
+    <!-- Table Section -->
+    <div  class="container section-5" id="section-5">
+        <h2>Section 5- Table </h2>
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+                <td>John</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                <td>25</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Div Section -->
+    <div  class="container section-6" id="section-6">
+        <h2>Section 6 - Div container</h2>
+        <div class="div-container">
+            <div class="div-box">
+                <h2>Left Content</h2>
+                <p>This is the left content section of the page. You can add any content here.</p>
+            </div>
+            <div class="div-box">
+                <h2>Right Content</h2>
+                <p>This is the right content section of the page. You can add different content here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- List Section -->
+    <div  class="container section-7" id="section-7">
+        <h2>Section 7 - List </h2>
+        <ul>
+            <li>List item 1</li>
+            <li>List item 2</li>
+            <li>List item 3
+                <ol>
+                    <li>Ordered item 1</li>
+                    <li>Ordered item 2</li>
+                    <li>Ordered item 3</li>
+                </ol>
+            </li>
+            <li>List item 4</li>
+        </ul>
+    </div>
+
+    <div class="container section-8" id="section-8">
+        <h2>Section 8 - Poem Format</h2>
+        <pre>
+            Roses are red,<br>
+            Violets are blue,<br>
+            Sugar is sweet,<br>
+            And so are you.
+        </pre>
+    </div>
+
+    <footer>
+        <p>© 2023 Lab Task 2. All rights reserved.</p>
+        <p><a href="mailto:info@prowebsite.com">info@prowebsite.com</a></p>
+        <p><a href="tel:+1234567890">+1 234 567 890</a></p>
+    </footer>
+</body>
+
+</html>

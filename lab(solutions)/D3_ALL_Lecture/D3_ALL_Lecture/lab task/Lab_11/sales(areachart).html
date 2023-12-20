@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .line {
+            fill: none;
+            stroke: steelblue;
+            stroke-width: 2;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+
+    <svg width="600" height="400"></svg>
+
+    <script>
+        var salesData = [
+            { month: "Jan", sales: 50 },
+            { month: "Feb", sales: 80 },
+            { month: "Mar", sales: 120 },
+            { month: "Apr", sales: 90 },
+            { month: "May", sales: 150 },
+            { month: "Jun", sales: 200 }
+        ];
+
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 };
+        var width = 600 - margin.left - margin.right;
+        var height = 400 - margin.top - margin.bottom;
+
+        var svg = d3.select("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var xScale = d3.scaleBand()
+            .domain(salesData.map(function (d) { return d.month; }))
+            .range([0, width])
+            .padding(0.1);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(salesData, function (d) { return d.sales; })])
+            .range([height, 0]);
+
+        var line = d3.line()
+            .x(function (d) { return xScale(d.month) + xScale.bandwidth() / 2; })
+            .y(function (d) { return yScale(d.sales); });
+
+        svg.append("path")
+            .datum(salesData)
+            .attr("class", "line")
+            .attr("d", line);
+
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(yScale);
+
+        svg.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y-axis")
+            .call(yAxis);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <h1>Update Data on Mouse Click</h1>
+    <div id="chart"></div>
+
+    <script>
+        const initialData = [10, 30, 20, 50, 40];
+        const updatedData = [25, 35, 45, 55];
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
+
+        let data = initialData; // Start with initialData
+
+        // Function to update the data and circles
+        function updateData() {
+            if (data === initialData) {
+                data = updatedData;
+            } else {
+                data = initialData;
+            }
+            updateCircles();
+        }
+
+        // Initial binding to circles
+        const circles = svg.selectAll("circle")
+            .data(data)
+			.attr("fill", "blue");
+
+        circles.enter()
+            .append("circle")
+            .attr("cx", (d, i) => (i * 80) + 50)
+            .attr("cy", 100)
+            .attr("r", (d) => d)
+            .attr("fill", "blue");
+
+        function updateCircles() {
+            const updateCircles = svg.selectAll("circle")
+                .data(data);
+
+            updateCircles
+                .transition()
+                .attr("r", (d) => d)
+                .attr("fill", "orange");
+
+         //   updateCircles.exit().remove();
+        }
+
+        // Click event listener to update data
+        svg.on("click", updateData);
+    </script>
+</body>
+</html>

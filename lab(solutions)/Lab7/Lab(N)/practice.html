@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Demo</title>
+</head>
+<body>
+    <form id="myForm">
+        <!-- 1. Variables and Data Types -->
+        <label for="name">Name:</label>
+        <label>
+             <input type="text" id="name" placeholder="Enter your name">
+        </label>
+       
+        <!-- 3. Control Structures -->
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Enter your age">
+
+        <!-- 4. Arrays and Objects -->
+        <label>Favorite Colors:</label>
+        <label for="colorRed">
+            <input type="checkbox" id="colorRed" name="favoriteColor" value="Red"> Red
+        </label>
+
+        <label for="colorGreen">
+            <input type="checkbox" id="colorGreen" name="favoriteColor" value="Green"> Green
+        </label>
+
+        <label for="colorBlue">
+            <input type="checkbox" id="colorBlue" name="favoriteColor" value="Blue"> Blue
+        </label>
+
+        <!-- 5. DOM Manipulation -->
+        <button type="button" id="submitButton">Submit</button>
+    </form>
+
+    <div id="output">
+        <!-- Output will appear here -->
+    </div>
+</body>
+<script>
+    // 2. Functions
+    function greet(name) {
+        return "Hello, " + name;
+    }
+
+    // 6. Event Handling
+    const form = document.getElementById("myForm");
+    const output = document.getElementById("output");
+
+    document.getElementById("submitButton").addEventListener("click", function() {
+        // Get values from the form
+        const name = document.getElementById("name").value;
+        const age = document.getElementById("age").value;
+        const colors = [];
+        if (document.getElementById("colorRed").checked) {
+            colors.push("Red");
+        }
+        if (document.getElementById("colorGreen").checked) {
+            colors.push("Green");
+        }
+        if (document.getElementById("colorBlue").checked) {
+            colors.push("Blue");
+        }
+
+        // 7. Asynchronous JavaScript
+        fetchData(name, age, colors);
+    });
+
+    function fetchData(name, age, colors) {
+        output.innerHTML = "Fetching data...";
+
+        setTimeout(() => {
+            // Display the data
+            output.innerHTML = `
+                <p>${greet(name)}</p>
+                <p>Age: ${age}</p>
+                <p>Favorite Colors: ${colors.join(", ")}</p>
+            `;
+
+            // 8. Scope and Closures
+            function innerFunction() {
+                return "This function has access to name: " + name;
+            }
+
+            alert(innerFunction());
+        }, 2000);
+    }
+</script>
+</html>

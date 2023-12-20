@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .axis-label {
+        font-size: 12px;
+    }
+</style>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+
+<svg width="700" height="220">
+    <g transform="translate(50, 160)" class="x-axis"></g>
+    <g transform="translate(30, 10)" class="y-axis"></g>
+    <g transform="translate(50, 20)" class="plot-area"></g>
+</svg>
+
+<script>
+    var heights = [80, 100, 30, 50, 40, 80, 90, 70, 55, 62, 72, 64, 58, 76, 84, 67, 95, 88, 46, 53, 61, 59, 78, 73, 68, 89, 97, 79, 91, 49, 41];
+
+    // Create X and Y scales
+    var xScale = d3.scaleLinear()
+        .domain([0, heights.length - 1])
+        .range([0, 600]);
+
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(heights)])
+        .range([100, 0]);
+
+    // Define a color scale based on heights
+    var colorScale = d3.scaleLinear()
+        .domain([0, d3.max(heights)])
+        .range(["blue", "red"]);
+
+    // Create X and Y axes
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale)
+        .ticks(5);
+
+    d3.select('.x-axis')
+        .call(xAxis);
+
+    d3.select('.y-axis')
+        .call(yAxis);
+
+    // Create lines, "V" symbols, and circles for each height
+    var data = heights.map(function (d, i) {
+        return { height: d, x: i };
+    });
+
+    var plotArea = d3.select('.plot-area');
+
+    var circles = plotArea.selectAll('circle')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('cx', function (d) { return xScale(d.x); })
+        .attr('cy', function (d) { return yScale(d.height); })
+        .attr('r', function (d) { return d.height / 7; })
+        .attr('fill', function (d) { return colorScale(d.height); });
+
+    var lines = plotArea.selectAll('line')
+        .data(data)
+        .enter()
+        .append('line')
+        .attr('x1', function (d) { return xScale(d.x); })
+        .attr('y1', 100)
+        .attr('x2', function (d) { return xScale(d.x); })
+        .attr('y2', function (d) { return yScale(d.height); })
+        .attr('stroke', function (d) { return colorScale(d.height); });
+
+    var texts = plotArea.selectAll('text')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('x', function (d) { return xScale(d.x); })
+        .attr('y', function (d) { return (yScale(d.height) + 100) / 2; })
+        .attr('text-anchor', 'middle')
+        .attr('alignment-baseline', 'middle')
+        .text('/\\')
+        .attr('font-size', function (d) { return 12 + d.height / 7 + 'px'; })
+        .attr('fill', function (d) { return colorScale(d.height); });
+		
+		var textOffset = 15; // Adjust this value to position the text
+		lines.append('text')
+        .attr('x', function (d) { return xScale(d.x); })
+        .attr('y', function (d) { return yScale(d.height) + textOffset; })
+        .attr('text-anchor', 'middle')
+        .text('/\\')
+        .attr('font-size', '14px') // You can adjust the font size as needed
+        .attr('fill', "black");
+
+    // Add a hover effect to circles, lines, and text
+    circles
+        .on('mouseover', function (event, d) {
+            d3.select(this)
+                .attr('r', function (d) { return d.height / 7 + 5; })
+                .attr('fill', 'yellow');
+            lines.filter((line, index) => index === d.x)
+                .attr('stroke', 'yellow');
+            texts.filter((text, index) => index === d.x)
+                .attr('fill', 'yellow');
+        })
+        .on('mouseout', function () {
+            d3.select(this)
+                .attr('r', function (d) { return d.height / 7; })
+                .attr('fill', function (d) { return colorScale(d.height); });
+            lines
+                .attr('stroke', function (d) { return colorScale(d.height); });
+            texts
+                .attr('fill', function (d) { return colorScale(d.height); });
+        });
+</script>
+</body>
+</html>

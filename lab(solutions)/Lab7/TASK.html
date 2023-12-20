@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Results</title>
+    <style>
+        /* Styles for the result table */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Styles for passed and failed students */
+        .passed {
+            color: green;
+        }
+
+        .failed {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Results</h1>
+
+    <form id="resultsForm">
+        <!-- 1. Variables and Data Types -->
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" placeholder="Enter student's name">
+       
+        <!-- 3. Control Structures -->
+        <label for="subject">Subject:</label>
+        <select id="subject">
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+            <option value="english">English</option>
+        </select>
+        
+        <label for="marks">Obtained Marks:</label>
+        <input type="number" id="marks" placeholder="Enter obtained marks">
+
+        <label for="totalMarks">Total Marks:</label>
+        <input type="number" id="totalMarks" placeholder="Enter total marks">
+
+        <button type="button" id="submitResult">Submit</button>
+    </form>
+
+    <h2>Results Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Subject</th>
+                <th>Obtained Marks</th>
+                <th>Total Marks</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable">
+            <!-- Results will appear here -->
+        </tbody>
+    </table>
+
+    <h2>Failed Students</h2>
+    <ul id="failedList">
+        <!-- Failed students will appear here -->
+    </ul>
+
+    <h2>Passed Students</h2>
+    <ul id="passedList">
+        <!-- Passed students will appear here -->
+    </ul>
+
+    <script>
+        // 2. Functions
+        const displayResult = (studentName, subject, obtainedMarks, totalMarks) => {
+            const resultTable = document.getElementById("resultTable");
+            const failedList = document.getElementById("failedList");
+            const passedList = document.getElementById("passedList");
+
+            const row = resultTable.insertRow();
+            const [cell1, cell2, cell3, cell4] = [
+                row.insertCell(0),
+                row.insertCell(1),
+                row.insertCell(2),
+                row.insertCell(3)
+            ];
+
+            cell1.textContent = studentName;
+            cell2.textContent = subject;
+            cell3.textContent = obtainedMarks;
+            cell4.textContent = totalMarks;
+
+            const percentage = (obtainedMarks / totalMarks) * 100;
+
+            // 8. Scope and Closures: Variable resultClass is within this function's scope.
+            const resultClass = percentage >= 50 ? "passed" : "failed";
+
+            cell1.classList.add(resultClass);
+            cell2.classList.add(resultClass);
+            cell3.classList.add(resultClass);
+            cell4.classList.add(resultClass);
+
+            const listItem = document.createElement("li");
+            listItem.textContent = `${studentName} - ${subject}`;
+            listItem.classList.add(resultClass);
+
+            if (percentage >= 50) {
+                // 6. Event Handling: Handling passed students.
+                passedList.appendChild(listItem);
+            } else {
+                // 6. Event Handling: Handling failed students.
+                failedList.appendChild(listItem);
+            }
+        };
+
+        // 6. Event Handling: Handling form submission.
+        const form = document.getElementById("resultsForm");
+        const resultButton = document.getElementById("submitResult");
+
+        resultButton.addEventListener("click", function() {
+            // 1. Variables and Data Types: Getting values from the form
+            const studentName = document.getElementById("studentName").value;
+            const subject = document.getElementById("subject").value;
+            const obtainedMarks = parseFloat(document.getElementById("marks").value);
+            const totalMarks = parseFloat(document.getElementById("totalMarks").value);
+
+            if (isNaN(obtainedMarks) || obtainedMarks < 0 || obtainedMarks > totalMarks) {
+                // 10. Error Handling: Handling invalid input.
+                alert("Please enter valid obtained marks.");
+            } else {
+                // 7. Asynchronous JavaScript: Simulated delay.
+                alert("Processing..."); // Display a processing message
+
+                // Simulate an asynchronous operation (e.g., fetching data from a server)
+                setTimeout(() => {
+                    // 6. Event Handling: Calling displayResult function.
+                    displayResult(studentName, subject, obtainedMarks, totalMarks);
+                }, 2000); // Simulated 2-second delay
+            }
+        });
+    </script>
+</body>
+</html>

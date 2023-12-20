@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <h1>Remove Circles on Click</h1>
+    <div id="chart"></div>
+
+    <script>
+        const data = [10, 30, 20, 50, 40];
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+        // Binding data to circles
+        const circles = svg.selectAll("circle")
+            .data(data);
+
+        circles.enter()
+            .append("circle")
+            .attr("cx", (d, i) => (i * 80) + 50)
+            .attr("cy", 100)
+            .attr("r", (d) => d)
+            .attr("fill", "blue")
+            .on("click", removeCircle);
+
+        function removeCircle() {
+            d3.select(this) // 'this' refers to the clicked circle
+                .transition()
+                .attr("r", 0) // Set radius to 0 for a smooth removal effect
+                .remove();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donut Chart Example</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <div>
+        <input type="text" id="inputString" placeholder="Enter a string">
+        <button onclick="createDonutChart()">Create Donut Chart</button>
+    </div>
+    <div id="donut-chart"></div>
+
+    <script>
+        function createDonutChart() {
+            // Get user input from the text field
+            var inputString = document.getElementById("inputString").value;
+
+            // Remove spaces from the input string
+            var inputWithoutSpaces = inputString.replace(/\s/g, "");
+
+            // Process the input string without spaces to count character frequencies
+            var charCount = {};
+            for (var i = 0; i < inputWithoutSpaces.length; i++) {
+                var char = inputWithoutSpaces.charAt(i);
+                charCount[char] = (charCount[char] || 0) + 1;
+            }
+
+            // Convert character frequencies to data format for the donut chart
+            var data = Object.keys(charCount).map(function(char) {
+                return { label: char, value: charCount[char] };
+            });
+
+            // Dimensions of the SVG container
+            var width = 500;
+            var height = 500;
+            var radius = Math.min(width, height) / 2;
+            var innerRadius = radius / 2; // Define the inner radius for the donut chart
+
+            // Create an SVG element and append it to the container
+            var svg = d3.select("#donut-chart")
+                .selectAll("svg")
+                .data([data]) // Bind the data to the SVG element
+                .join("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            // Create a group element for the donut chart
+            var g = svg.append("g")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            // Define a color scale for the donut segments
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            // Create a pie layout
+            var pie = d3.pie()
+                .sort(null)
+                .value(function(d) { return d.value; });
+
+            // Generate the donut chart segments
+            var arc = d3.arc()
+                .innerRadius(innerRadius) // Use the defined inner radius
+                .outerRadius(radius);
+
+            // Bind the data to the donut segments
+            var path = g.selectAll("path")
+                .data(pie(data))
+                .enter()
+                .append("path")
+                .attr("d", arc)
+                .attr("fill", function(d, i) { return color(i); });
+
+            // Add labels to the donut chart
+            var label = d3.arc()
+                .outerRadius(radius - 40)
+                .innerRadius(radius - 40);
+
+            g.selectAll("text")
+                .data(pie(data))
+                .enter()
+                .append("text")
+                .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+                .text(function(d) { return d.data.label + " (" + d.data.value + ")"; });
+        }
+    </script>
+</body>
+</html>

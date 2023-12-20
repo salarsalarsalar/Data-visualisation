@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    .axis-label {
+        font-size: 12px;
+    }
+    .stickman {
+        stroke: black;
+        stroke-width: 2;
+        fill: none;
+    }
+</style>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+
+<svg width="700" height="400">
+    <g transform="translate(50, 160)" class="x-axis"></g>
+    <g transform="translate(30, 10)" class="y-axis"></g>
+    <g transform="translate(50, 20)" class="plot-area"></g>
+</svg>
+
+<script>
+    var heights = [80, 100, 30, 50, 40, 80, 90, 70, 55, 62, 72, 64, 58, 76, 84, 67, 95, 88, 46, 53, 61, 59, 78, 73, 68, 89, 97, 79, 91, 49, 41];
+
+    // Create X and Y scales
+    var xScale = d3.scaleLinear()
+        .domain([0, heights.length - 1])
+        .range([0, 600]);
+
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(heights)])
+        .range([100, 0]);
+
+    // Define a color scale based on heights
+    var colorScale = d3.scaleLinear()
+        .domain([0, d3.max(heights)])
+        .range(["blue", "red"]);
+
+    // Create X and Y axes
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale)
+        .ticks(5);
+
+    d3.select('.x-axis')
+        .call(xAxis);
+
+    d3.select('.y-axis')
+        .call(yAxis);
+
+    var data = heights.map(function (d, i) {
+        return { height: d, x: i };
+    });
+
+    var plotArea = d3.select('.plot-area');
+
+    // Create scatter plot with stickman figures
+    plotArea.selectAll('.stickman')
+        .data(data)
+        .enter()
+        .append('g')
+        .attr('class', 'stickman')
+        .attr('transform', function (d) {
+            return 'translate(' + xScale(d.x) + ',' + yScale(d.height) + ')';
+        })
+        .each(function () {
+            // Head
+            d3.select(this)
+                .append('circle')
+                .attr('cx', 0)
+                .attr('cy', 0)
+                .attr('r', 10);
+
+            // Body
+            d3.select(this)
+                .append('line')
+                .attr('x1', 0)
+                .attr('y1', 10)
+                .attr('x2', 0)
+                .attr('y2', 30);
+
+            // Arms
+            d3.select(this)
+                .append('line')
+                .attr('x1', -5)
+                .attr('y1', 15)
+                .attr('x2', 5)
+                .attr('y2', 15);
+
+            // Legs
+            d3.select(this)
+                .append('line')
+                .attr('x1', 0)
+                .attr('y1', 30)
+                .attr('x2', -5)
+                .attr('y2', 40);
+
+            d3.select(this)
+                .append('line')
+                .attr('x1', 0)
+                .attr('y1', 30)
+                .attr('x2', 5)
+                .attr('y2', 40);
+        });
+
+    // Add a hover effect to stickman figures
+    plotArea.selectAll('.stickman')
+        .on('mouseover', function () {
+            d3.select(this).attr('class', 'stickman hover');
+        })
+        .on('mouseout', function () {
+            d3.select(this).attr('class', 'stickman');
+        });
+</script>
+</body>
+</html>

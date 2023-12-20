@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+<script>
+    var data = [5, 100, 400, 200, 700, 850, 1000, 2000];
+
+    // Calculate the width based on the maximum data value
+    var width = d3.max(data) + 100;
+
+    // Calculate the height based on the number of data points
+    var barHeight = 40;
+    var gap = 10; // Set the desired gap between bars
+    var height = data.length * (barHeight + gap) + 100;
+
+    var scale = d3.scaleLinear()
+        .domain([0, 2000])
+        .range([0, width]);
+
+    var color = d3.scaleLinear()
+        .domain([0, 2000])
+        .range(["red", "green"]);
+
+    var axis = d3.axisBottom(scale)
+        .ticks(5)
+        .tickFormat(d3.format(".0f"));
+
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var bars = svg.selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("transform", function(d, i) {
+            return "translate(0," + i * (barHeight + gap) + ")";
+        });
+
+    bars.append("rect")
+        .attr("height", barHeight)
+        .attr("width", function(d) { return scale(d); })
+        .attr("fill", function(d) { return color(d); });
+
+    // Add text elements for displaying values on hover
+    bars.append("text")
+        .text(function(d) { return d; })
+        .attr("x", function(d) { return scale(d) / 2; }) // Adjust the text's x-position
+        .attr("y", barHeight / 2)
+        .attr("fill", "black")
+        .style("visibility", "hidden");
+
+    bars.on("mouseover", function() {
+        d3.select(this).select("rect").attr("stroke", "yellow"); // Change color on hover
+        d3.select(this).select("text").style("visibility", "visible"); // Show text on hover
+    })
+    .on("mouseout", function() {
+        d3.select(this).select("rect").attr("stroke", function(d) { return color(d); }); // Restore original color
+        d3.select(this).select("text").style("visibility", "hidden"); // Hide text on mouseout
+    });
+
+    // Append the x-axis at the bottom
+    svg.append("g")
+        .attr("transform", "translate(0," + (height - 50) + ")")
+        .call(axis);
+</script>
+</body>
+</html>

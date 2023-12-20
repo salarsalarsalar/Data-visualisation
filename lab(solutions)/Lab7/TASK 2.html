@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Expression Calculator</title>
+    <style>
+        input[type="text"] {
+            width: 200px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Expression Calculator</h1>
+    <label>Enter a mathematical expression:
+        <input type="text" id="expressionInput" placeholder="e.g., 2 + 3 * 4">
+    </label>
+    <button id="calculateButton">Calculate</button>
+    <button id="clearButton">Clear</button>
+    <div id="result">Result: </div>
+
+    <script>
+        // Calculator object with method chaining
+        const calculator = {
+            expression: "",
+            setResult: function (result) {
+                document.getElementById("result").textContent = `Result: ${result}`;
+                return this; // Return the object for chaining
+            },
+            clear: function () {
+                this.expression = "";
+                document.getElementById("expressionInput").value = "";
+                this.setResult("");
+                return this; // Return the object for chaining
+            },
+            calculate: function () {
+                try {
+                    const result = eval(this.expression);
+                    return result;
+                } catch (error) {
+                    return "Error"; // Handle invalid expressions
+                }
+            },
+            add: function (value) {
+                this.expression += value;
+                return this; // Return the object for chaining
+            },
+        };
+
+        // Event handling
+        const calculateButton = document.getElementById("calculateButton");
+        const clearButton = document.getElementById("clearButton");
+        const expressionInput = document.getElementById("expressionInput");
+
+        calculateButton.addEventListener("click", function () {
+            const inputExpression = expressionInput.value;
+            const result = calculator
+                .clear()
+                .add(inputExpression)
+                .calculate();
+            
+            calculator.setResult(result);
+        });
+
+        clearButton.addEventListener("click", function () {
+            calculator.clear();
+        });
+    </script>
+</body>
+</html>

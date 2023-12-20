@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <h1>D3.js Example</h1>
+    <div id="chart"></div>
+
+    <script>
+        const data = [10, 30, 20, 50];
+
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 200);
+
+        // Bind data to rect elements and create a bar chart
+        const rects = svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", (d, i) => i * 80 + 10)
+            .attr("y", (d) => 150 - d)
+            .attr("width", 40)
+            .attr("height", (d) => d)
+            .attr("fill", "blue");
+    </script>
+</body>
+</html>
