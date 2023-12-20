@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex; /* Use flexbox to align divs horizontally */
+        }
+
+        .box {
+            width: 200px; /* Set a width for each div */
+            height: 150px; /* Set a height for each div */
+            margin: 10px; /* Add some margin for spacing */
+            background-color: #ccc; /* Add background color for visibility */
+        }
+    </style>
+    <style>
+        #sections {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #c13737;
+        }
+        
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #c13737;
+        }
+        
+        #section_type {
+          float: left;
+        }
+        
+        #section_type a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 16px;
+          text-decoration: none;
+        }
+        
+        #section_type a:hover {
+          background-color: #111111;
+        }
+        #Section_1 {
+            background-color: aqua;
+        }
+        #Section_2 {
+            background-color: beige;
+        }
+        #Section_3 {
+            background-color: #c13737;
+        }
+        #Section_4{
+            background-color: antiquewhite;
+        }
+        #Section_5 {
+            background-color: yellowgreen;
+        }
+        </style>
+        
+</head>
+<header>
+    <h1> MY sample heading</h1>
+</header>
+    <body>
+        <ul>
+            <li><a id="section_type" href="#Section_1"   >Section_1</a></li>
+            <li><a id="section_type" href="#Section_2"   >Section_2</a></li>
+            <li><a id="section_type" href="#Section_3"   >Section_3</a></li>
+            <li><a id="section_type" href="#Section_4"   >Section_4</a></li>
+            <li><a id="section_type" href="#Section_5"   >Section_5</a></li>
+        </ul>
+
+        <div id="Section_1" style="background-color: aqua;"> 
+            this is section_1
+            <hr>
+            <p id="hello"> I guess we <i>could</i> discuss the <b>implications of the phrase</b> <mark>"meant to be."</mark>  That is if <em>wanted to drown <br>ourselves</em>  in a sea of backwardly referential semantics and other mumbo-jumbo</p>
+            <!-- <a src="www.google.com"> my quote</a> -->
+            <q><p> my quote</p></q>
+            <blockquote href="https://www.google.com">
+    
+                <p>This is the quoted text from another source.</p>
+                <a href="www.google.com"><p> This is the quoted text from another source.</p></a>    
+                <img src="images.jpg" alt="my image">
+                
+                </blockquote>
+            <hr>
+        </div>
+        <hr>
+        <div id="Section_2" style="background-color: #c13737;"> 
+            this is section_2
+
+            <ul>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+            </ul>
+            <ol>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+            </ol>
+    
+            <ul>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+                <ol>
+                    <li>item 1</li>
+                    <li>item 2</li>
+                    <li>item 3</li>
+                </ol>
+            </ul>
+            <button> my button </button>
+            <hr>
+        </div>
+        <hr>
+        <div id="Section_3" style="background-color: aquamarine;"> 
+            this is section_3
+            <hr>
+            
+        <table border="2">
+            <tr>
+                <th>item 1</th>
+                <th>item 2</th>
+                <th>item 3</th>
+            </tr>
+            <tr>
+                <th>item 1</th>
+                <th>item 2</th>
+                <th>item 3</th>
+            </tr>
+            <tr>
+                <th>item 1</th>
+                <th>item 2</th>
+                <th>item 3</th>
+            </tr>
+        </table>
+        <hr>
+        </div>
+        <hr>
+        <div id="Section_4" style="background-color: bisque;"> 
+            this is section_4
+            <hr>
+            <div  style="background-color: blue; text-align: left; border: 5px outset red; ">
+                <p> <h3> text 1</h3></p>
+            </div>
+            <div style="background-color: brown; text-align: right; border: 5px outset red;">
+                <p><h3> text 2</h3></p>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="box">Text 1</div>
+                <div class="box">Text 2</div>
+            </div>
+            <hr>
+        </div>
+        <div id="Section_5" style="background-color: violet;"> 
+            this is section_5
+            <hr>
+            <div style="background-image: url('images.jpg');"> 
+                <p> No matter how hard he tried, he couldn't give her a good explanation about what had happened. <br>
+                    It didn't even really make sense to him. All he knew was that he froze at the moment and no matter <br>
+                    how hard he tried to react, nothing in his body allowed him to move. It was as if he had instantly <br>
+                    become a statue and although he could see what was taking place, he couldn't move to intervene. <br>
+                    He knew that wasn't a satisfactory explanation even though it was the truth.</p>
+            </div>
+        </div>
+        <div id="Section_6" style="background-color: yellow;">
+            This is section_6
+            <hr>
+            <div>
+                <div class="calculator">
+                    <input type="number" id="num1" placeholder="Enter first number">
+                    <input type="number" id="num2" placeholder="Enter second number">
+                    <div>
+                        <input type="button" value="+" onclick="calculate('+')">
+                        <input type="button" value="-" onclick="calculate('-')">
+                        <input type="button" value="*" onclick="calculate('*')">
+                        <input type="button" value="/" onclick="calculate('/')">
+                    </div>
+                    <input type="text" id="result" placeholder="Result" readonly>
+                </div>
+            
+                <script>
+                    function calculate(operator) {
+                        const num1 = parseFloat(document.getElementById('num1').value);
+                        const num2 = parseFloat(document.getElementById('num2').value);
+            
+                        if (isNaN(num1) || isNaN(num2)) {
+                            document.getElementById('result').value = 'Invalid input';
+                        } else {
+                            let result;
+                            switch (operator) {
+                                case '+':
+                                    result = num1 + num2;
+                                    break;
+                                case '-':
+                                    result = num1 - num2;
+                                    break;
+                                case '*':
+                                    result = num1 * num2;
+                                    break;
+                                case '/':
+                                    if (num2 === 0) {
+                                        result = 'Division by zero';
+                                    } else {
+                                        result = num1 / num2;
+                                    }
+                                    break;
+                                default:
+                                    result = 'Invalid operator';
+                            }
+                            document.getElementById('result').value = result;
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+        <hr>
+        </body>
+</html>
