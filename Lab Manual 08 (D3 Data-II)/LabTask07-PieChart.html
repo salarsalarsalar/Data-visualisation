@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Lab Task 07 - Pie Chart</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <style>
+            svg {
+                width: 500px;
+                height: 500px;
+            }
+        </style>
+    </head>
+    <body>
+        <svg></svg>
+        <script>
+            // Data
+            const data = [
+                { name: "DAV", value: 3.7/4 },
+                { name: "AI", value: 2.8/4 },
+                { name: "DS", value: 2.4/4 },
+                { name: "PF", value: 3.5/4	 },
+                { name: "OS", value: 1.8/4	 },
+                { name: "CY", value: 1.0/4 }
+            ];
+
+            // Dimensions
+            const width = 500;
+            const height = 500;
+            const margin = 50;
+            const radius = Math.min(width, height) / 2 - margin;
+            // Color scale
+            const color = d3.scaleOrdinal()
+                .domain(data.map(d => d.name))
+                .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse());
+            // Pie chart
+            const pie = d3.pie()
+                .value(d => d.value);
+            // Arc
+            const arc = d3.arc()
+                .innerRadius(15)
+                .outerRadius(radius);
+            // SVG
+            const svg = d3.select("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `t-ranslate(${width / 2},${height / 2})`);
+            // Tooltip
+            const tooltip = d3.select("body")
+                .append("div")
+                .style("opacity", 5)
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "5px");
+            // Mouseover event handler
+            const mouseover = function (event, d) {
+                tooltip.style("opacity", 1);
+                d3.select(this)
+                    .style("stroke", "black")
+                    .style("opacity", 1);
+            };
+            // Mousemove event handler
+            const mousemove = function (event, d) {
+                tooltip
+                    .html("The exact value of<br>"+ d.data.name + ": "  + d.data.value)
+                    .style("left", (event.pageX + 40) + "px")
+                    .style("top", (event.pageY + 10) + "px");
+            };
+            // Mouseout event handler
+            const mouseout = function (event, d) {
+                tooltip.style("opacity", 0);
+                d3.select(this)
+                    .style("stroke", "none")
+                    .style("opacity", 0.8);
+            };
+            // Data and color scale
+            const pieData = pie(data);
+            // Draw the pie chart
+            svg
+                .selectAll("pie")
+                .data(pieData)
+                .enter()
+                .append("path")
+                .attr("d", arc)
+                .attr("fill", d => color(d.data.name))
+                .attr("stroke", "none")
+                .style("opacity", 1)
+                .on("mouseover", mouseover)
+                .on("mousemove", mousemove)
+                .on("mouseout", mouseout);
+        </script>
+    </body>
+</html>

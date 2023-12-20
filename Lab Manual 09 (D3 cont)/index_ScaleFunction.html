@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <title>
+        D3 Data functions
+    </title>
+    <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <!-- // load d3-selection-multi as separate script -->
+        <!-- <script src="https://d3js.org/d3-selection-multi.v0.4.min.js"></script>  -->
+    </head> 
+    <body>
+        <svg width="900" height="600" transform="translate(150, 40)">
+            <g id="circlegrp" transform="translate(40, 40)">
+            </g>
+        </svg>
+        <script>
+        var myData = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+        //D3 creates a function myScale which accepts input between 0 and 10 (the domain) and 
+        // maps it to output between 0 and 600 (the range). 
+        // scales with continuous input and continuous output
+        // scales with continuous input and discrete output
+        // scales with discrete input and discrete output
+
+
+        // defining linear scale function for cx of the circle
+        let linearScale = d3.scaleLinear()
+            .domain([0, 100])
+            .range([0, 800]);
+            //.range(['yellow', 'red']); // for color scales but can also consider scaleQuantize, scaleQuantile and scaleThreshold.
+            
+            linearScale(0);   // returns 0
+            linearScale(5);   // returns 300
+            linearScale(10);  // returns 600
+        console.log(linearScale(5));
+
+        // defining linear scale function for cy of the circle
+        // defining float data list for radius of the circle
+
+        let cydata = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
+        let extent = d3.extent(cydata); // returns [0, 100]
+        let linearScale2 = d3.scaleLinear()
+           // .domain([0.1, 1.0])
+            .domain(extent)
+            .range([0, 40])
+            .clamp(true) // clamp the output to keep input value stays within the domain using
+            .nice(); // extend the domain to nice round numbers
+
+    // scaleTime is similar to scaleLinear except the domain is expressed as an array of dates.
+    // (It’s very useful when dealing with time series data.)
+
+        timeScale = d3.scaleTime()
+            .domain([new Date(2016, 0, 1), new Date(2017, 0, 1)])
+            .range([0, 700]);
+
+            timeScale(new Date(2016, 0, 1));   // returns 0
+            timeScale(new Date(2016, 6, 1));   // returns 348.00...
+            let time = timeScale(new Date(2017, 0, 1));   // returns 700
+            console.log(time);
+
+    // scaleSequential
+    // scaleSequential is used for mapping continuous values to an output range determined by a preset 
+    // (or custom) interpolator. (An interpolator is a function that accepts input between 0 and 1
+    // and outputs an interpolated value between two numbers, colours, strings etc.)
+    // D3 provides a number of preset interpolators including many colour ones. 
+    // For example you can use d3.interpolateRainbow to create the well known rainbow colour scale:
+
+    let sequentialScale = d3.scaleSequential()
+        .domain([0, 100])
+        .interpolator(d3.interpolateRainbow);
+        sequentialScale(0);   // returns 'rgb(110, 64, 170)'
+        sequentialScale(50);  // returns 'rgb(175, 240, 91)'
+        sequentialScale(100); // returns 'rgb(110, 64, 170)'
+        console.log(sequentialScale(50));
+
+
+    d3.select('#circlegrp')
+        .selectAll('circle')
+        .data(myData)
+        .join('circle')
+        // on mouse click increase the radius of the circle
+        .on('click', function(event, d) {
+            d3.select(this)
+                .transition()
+                .duration(1000)
+                .attr('r', d => linearScale2(d))
+                .attr('cx', d => linearScale(d))
+                .attr('cy', d => linearScale(d))
+                .attr('fill', d => sequentialScale(d))
+                .attr('stroke', 'black')
+                .attr('stroke-width', 2);
+        })
+        .attr('r', function(d) { 
+            return linearScale2(d); 
+        })
+        .attr('cx', function(d) {
+            return linearScale(d);
+        })
+        .style('fill', function(d) {
+            return sequentialScale(d);
+        });
+
+
+    </script>
+
+    <!-- Scales with discrete input and discrete output
+    scaleOrdinal
+    scaleOrdinal maps discrete values (specified by an array) to discrete values (also specified by an array). 
+    The domain array specifies the possible input values and the range array the output values.
+    The range array will repeat if it’s shorter than the domain array.
+    let myData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+        let ordinalScale = d3.scaleOrdinal()
+        .domain(myData)
+        .range(['black', '#ccc', '#ccc']);
+
+        ordinalScale('Jan');  // returns 'black';
+        ordinalScale('Feb');  // returns '#ccc';
+        ordinalScale('Mar');  // returns '#ccc';
+        ordinalScale('Apr');  // returns 'black'; -->
+
+        
+    </body>
+</html>

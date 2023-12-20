@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <svg width="760" height="200">
+            <g class="bars" transform="translate(70, 30)"></g>
+            <g class="labels" transform="translate(66, 30)"></g>
+          </svg>
+        
+        <script>
+            let cities = [
+                { name: 'London', population: 8674000},
+                { name: 'New York', population: 8406000},
+                { name: 'Sydney', population: 4293000},
+                { name: 'Paris', population: 2244000},
+                { name: 'Beijing', population: 11510000}
+                ];
+
+                // Join cities to rect elements and modify height, width and position
+                d3.select('.bars')
+                .selectAll('rect')
+                .data(cities)
+                .join('rect')
+                .attr('height', 25)
+                .attr('width', function(d) {
+                    let scaleFactor = 0.00004;
+                    return d.population * scaleFactor;
+                })
+                .attr('y', function(d, i) {
+                    return i * 30;
+                })
+
+                // Join cities to text elements and modify content and position
+                d3.select('.labels')
+                .selectAll('text')
+                .data(cities)
+                .join('text')
+                .attr('y', function(d, i) {
+                    return i * 30 + 18;
+                })
+                .text(function(d) {
+                    return d.name;
+                });
+        </script>
+    </body>
+</html>

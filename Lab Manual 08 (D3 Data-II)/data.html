@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!--  
+    <p></p>
+    <p></p>
+    <p></p>
+    <script>
+
+            // .text(function(d) {
+            //     return d;
+            // });
+
+            // .text(function (d, i) {
+            //     console.log(d); // the data element
+            //     console.log(i); // the index element
+            //     console.log(this); // the current DOM object
+
+            //     return d;
+            // });
+
+        var data = [100, 200, 300];
+        var paragraph = d3.select("body")
+                .selectAll("p")
+                .data(data)
+                .text(function (d) {
+                    return d;
+                });
+            
+    </script> -->
+
+    <svg width="600" height="100">
+        <g class="chart">
+        </g>
+    </svg>
+
+    
+
+   
+
+
+    <!-- You will see only one circle
+        .attr('cx', function(d, i) { return i * 100;}), 
+        .attr('r', function(d) {return 0.5 * d;}) -->
+    <!-- <script>
+        let myData = [40, 10, 20, 60, 30];
+        d3.select('.chart')
+        .selectAll('circle')
+        .data(myData)
+        .join('circle')
+        .attr('cx', 200)  
+        .attr('cy', 50)
+        .attr('r', 40)   
+        .style('fill', 'orange');
+    </script>  -->
+
+    <script>
+      var cities = [
+        { name: 'London', population: 8674000},
+        { name: 'New York', population: 8406000},
+        { name: 'Sydney', population: 4293000},
+        { name: 'Paris', population: 2244000},
+        { name: 'Beijing', population: 11510000}
+        ];
+            d3.select('.chart')
+            .selectAll('circle')
+            .data(cities)
+            .join('circle')
+            .attr('cx', function(d, i) {
+                return i * 100;
+            }) 
+            .attr('cy', 50)
+            .attr('r', function(d) {
+                let scaleFactor = 0.000004;
+                return scaleFactor * d.population;
+            })
+            .style('fill', '#aaa');
+
+    </script>
+</body>
+</html>

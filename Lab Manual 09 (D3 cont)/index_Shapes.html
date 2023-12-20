@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <title>
+            D3 Shapes
+    </title>
+    <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <!-- // load d3-selection-multi as separate script -->
+        <!-- <script src="https://d3js.org/d3-selection-multi.v0.4.min.js"></script>  -->
+    </head> 
+    <body>
+        <svg width="700" height="160" transform="translate(20, 0)">
+            <g id="shapes">
+            </g>
+        </svg>
+        <script>
+        
+
+            var xScale = d3.scaleLinear().domain([0, 6]).range([0, 600]);
+            var yScale = d3.scaleLinear().domain([0, 80]).range([150, 0]);
+
+            var lineGenerator = d3.line()
+                
+                .x(function(d, i) {
+                    return xScale(i);
+                })
+                .y(function(d) {
+                    return yScale(d.value);
+                });
+
+            var data = [
+                {value: 10}, 
+                {value: 50}, 
+                {value: 30}, 
+                {value: 40}, 
+                {value: 20}, 
+                {value: 70},
+                {value: 50}
+            ];
+    // if our given data has some null values then we have to use defined function
+          //  var points = [[0, 80], [100, 100],null, [300, 50],[400, 40],[500, 80]];
+          //d3.line().defined(function(d) {return d !== null; })
+
+    // if we want the end points curved 
+    // .curve(d3.curveCardinal);
+    // d3.line().curve(d3.curveBasis);
+
+            var line = lineGenerator(data)
+            
+            // Create a path element and set its d attribute
+            d3.select('#shapes')
+                .append('path')
+                .attr('d', line)
+                .attr('stroke', 'blue')
+                .attr('stroke-width', 2)
+                .attr('fill', 'none');
+            rainbowLine(data);
+        </script>
+    </body>
+</html>

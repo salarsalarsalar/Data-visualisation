@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>D3 Basic Methods</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <!-- // load d3-selection-multi as separate script -->
+        <script src="https://d3js.org/d3-selection-multi.v0.4.min.js"></script>
+    </head>
+    <body>
+        <h1>D3 Data functions</h1>
+        <p id="p1">First paragraph</p>
+        <script>
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", 800)
+            .attr("height", 500)
+            .style("border", "1px solid black")
+            .style("background-color", "lightgray")
+            .style("padding", "10px")
+            .style("margin", "10px")
+            .style("display", "inline-block");
+        
+        
+        var rect = svg.append("rect")
+            .attr("x", 10)
+            .attr("y", 10)
+            .attrs({
+                "width": 200,
+                "height": 200,
+                "fill": "red"
+            });
+// creating circles using d3
+        var circle = svg.append("circle")
+            .attrs({
+                "cx": 300,
+                "cy": 100,
+                "r": 50,
+                "fill": "blue"
+            });
+
+        </script>
+    </body>
+</html>
