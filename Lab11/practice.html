@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Pratice</h1>
+    <script>
+        // extract node names
+        // remove/slice first row
+        const nodes = Object.keys(matrix[0]).slice(1);
+        
+        // Create a hierarchial structure 
+        // method chaining
+        const root = d3.stratify()
+        .id(function(d){
+            return d.name;
+        })
+        .parentId(function(d){
+            const parentIndex = matrix.findIndex(function(row){
+                return row[d.name === "1"];
+            })
+        });
+
+        if(parentIndex !== -1){
+            return nodes[parentIndex];
+        } else {
+            return null;
+        }
+        (nodes.map(function (name){
+            return {name:name};
+        }));
+        const treeData = tree(root);
+
+        
+    </script>
+</body>
+</html>
