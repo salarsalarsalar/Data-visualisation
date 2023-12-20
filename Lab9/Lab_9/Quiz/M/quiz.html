@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Fill Color Change</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <!-- SVG element to display a circle -->
+                <svg width="100" height="100" id="svgCircle">
+                    <circle cx="50" cy="50" r="40" fill="blue" />
+                </svg>
+            </td>
+            <td>
+                <!-- Color selection buttons for the circle -->
+                <button onclick="changeFillColor('red', 'svgCircle')">Red</button>
+                <button onclick="changeFillColor('green', 'svgCircle')">Green</button>
+                <button onclick="changeFillColor('blue', 'svgCircle')">Blue</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- SVG element to display a rectangle -->
+                <svg width="100" height="100" id="svgRectangle">
+                    <rect x="10" y="10" width="80" height="80" fill="orange" />
+                </svg>
+            </td>
+            <td>
+                <!-- Color selection buttons for the rectangle -->
+                <button onclick="changeFillColor('purple', 'svgRectangle')">Purple</button>
+                <button onclick="changeFillColor('pink', 'svgRectangle')">Pink</button>
+                <button onclick="changeFillColor('orange', 'svgRectangle')">Orange</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- SVG element to display a triangle -->
+                <svg width="100" height="100" id="svgTriangle">
+                    <polygon points="10,10 90,10 50,90" fill="green" />
+                </svg>
+            </td>
+            <td>
+                <!-- Color selection buttons for the triangle -->
+                <button onclick="changeFillColor('blue', 'svgTriangle')">Blue</button>
+                <button onclick="changeFillColor('yellow', 'svgTriangle')">Yellow</button>
+                <button onclick="changeFillColor('red', 'svgTriangle')">Red</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- SVG element to display a star -->
+                <svg width="100" height="100" id="svgStar">
+                    <polygon points="50,10 61.8,38.2 90,44.1 70,63.8 76.4,90 50,75 23.6,90 30,63.8 10,44.1 38.2,38.2" fill="yellow" />
+                </svg>
+            </td>
+            <td>
+                <!-- Color selection buttons for the star -->
+                <button onclick="changeFillColor('red', 'svgStar')">Red</button>
+                <button onclick="changeFillColor('blue', 'svgStar')">Blue</button>
+                <button onclick="changeFillColor('green', 'svgStar')">Green</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- SVG element to display a heart -->
+                <svg width="100" height="100" id="svgHeart">
+                    <polygon points="50,10 60,0 70,0 80,5 85,20 50,60 50,10 40,0 30,0 20,5 15,20 50,60 "/>
+                </svg>
+            </td>
+            <td>
+                <!-- Color selection buttons for the heart -->
+                <button onclick="changeFillColor('pink', 'svgHeart')">Pink</button>
+                <button onclick="changeFillColor('purple', 'svgHeart')">Purple</button>
+                <button onclick="changeFillColor('red', 'svgHeart')">Red</button>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        // Function to change the fill color of an SVG
+        function changeFillColor(color, svgId) {
+            const svgElement = document.getElementById(svgId);
+            const shape = svgElement.querySelector('*');
+            shape.setAttribute('fill', color);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./index.js"></script>
+    <!-- <script>
+        var svg = d3.select("svg");
+        //Append circle 
+        svg.append("circle")
+            .attr("cx",250)
+            .attr("cy",50)
+            .attr("r",50)
+            .attr("fill","blue");
+    </script> -->
+</head>
+<!-- XAMPP SERVER PATH, LOCALHOST/FOLDERNAME/INDEX.HTML -->
+<body>
+    <svg width="350" height="350">
+        <circle cx="30" cy="30" r="30" stroke = "red" stroke-width="3" fill="yellow"></circle>
+        <circle cx="30" cy="90" r="30" fill="green" stroke = "red" stroke-width="3"></circle>
+        <circle cx="30" cy="150" r="30" fill="blue" stroke="red" stroke-width="3"></circle>
+    </svg>
+    <!-- <button> Click here </button> -->
+    <button onclick="remove_svg()"> Click here to remove one svg circle</button>
+    <!-- <p></p> -->
+</body>
+<script>
+    var svg = d3.select("svg");
+    //Append circle 
+    svg.append("circle")
+       .attr("cx",170)
+       .attr("cy",130)
+       .attr("r" ,50)
+       .attr("fill","orange");
+    
+    var svg = d3.select("svg");
+    
+    //Add text
+    svg.append("text")
+       .attr("x",0)
+       .attr("y",240)
+       .text("Second Paragraph:");
+
+    // selecting body tag and appending paragraph tag with id p1
+    // adding text to that paragraph tag
+    d3.select("body")
+      .append('p')
+      .text('Hello')
+      .style("color","Red")
+      .attr("id","p1");
+      
+    d3.select("body")
+      .append('p')
+      .text('Hello')
+      .style("color","Blue")
+      .attr("id","p2");
+    
+    d3.select("body")
+      .append('p')
+      .text('Hello')
+      .style("color","Green")
+      .attr("id","p3");
+
+    // insert
+    d3.select("body")
+      .insert('p',"#p1")
+      .text('Hello insert')
+      .style("color","purple")
+      .attr("id","p1");
+
+
+    function remove_svg() 
+    {
+      var svg = d3.select("svg")
+          svg.select("circle")
+             .remove();
+    }
+    d3.select("svg")
+</script>
+</html>

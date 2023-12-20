@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <h1>Todays Lab</h1>
+    <div id="chart">
+    </div>
+    <script>
+      const data = [20, 80, 40, 60, 100];
+      const color = ['blue', 'yellow', 'red', 'orange', 'cyan']
+      const color1 = ['cyan', 'orange', 'red', 'yellow', 'blue']
+
+      const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", 1000)
+        .attr("height", 300);
+
+      const circles = svg.selectAll("rect")
+        .data(data)
+        .enter() //if there is no circle present then create one
+        .append("rect")
+        .attr("x", (d, i) => (i*70) + 10)
+        .attr("y", (d) => 200 - d)
+        .attr('height', (d) => d)
+        .attr("width", 50)
+        .attr("fill", "blue")
+        .attr("stroke", "black")
+        .attr("stroke-width", 3)
+        .attr("fill", (d, i) => color[i]);
+
+      update();
+
+      function update()
+      {
+        circles.transition()
+               .duration(2000)
+               .delay(200)
+               .ease(d3.easeLinear)
+               .attr('height', (d) => d * 2)
+               .attr("y", (d) => 250 - d * 2)
+               .on("end", function()
+               {
+                  circles.transition()
+                    .duration(2000)
+                    .delay(200)
+                    .ease(d3.easeLinear)
+                    .attr('height', (d) => d)
+                    .attr("y", (d) => 200 - d)
+                    .attr("fill", (d, i) => color1[i]);
+               })
+      }
+    </script>
+  </body>
+</html>

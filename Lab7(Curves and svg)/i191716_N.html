@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <svg width="100" height="100">
+        <!-- line commands L(line), H(height), V(veritical), M(move start point ),Z(end point) -->
+        <path d="M20,40 
+                 L80,40
+                 L80,70
+                 L20,70
+                 Z"/>
+    </svg>
+
+    <svg width="100" height="100">
+        <!-- line commands L(line), H(height), V(veritical), M(move),Z(end point) -->
+        <path d="M20,40 
+                 L80,40
+                 L20,70
+                 Z" 
+                 fill="blue"/>
+    </svg>
+
+    <svg width="100" height="100">
+        <!-- line commands L(line), H(height), V(veritical), M(move),Z(end point) -->
+        <path d="M20,40 
+                 H100
+                 V90
+                 H20
+                 Z"
+                 fill="green"/>
+    </svg>
+    
+    <!-- curves -->
+    <svg width="100" height="100">
+        <!--  -->
+        <path d="M20,50
+                 C20,70
+                  50,30
+                  40,50"
+              stroke="black"/>
+    </svg>
+    
+    <svg width="100" height="100">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <path d="M0,50
+                 C20,20
+                  50,70
+                  100,50"
+              stroke="black"/>
+    </svg>
+ 
+    <svg width="100" height="100">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <path d="M0,50
+                 C25,0
+                  80,100
+                  100,50"
+              stroke="black"/>
+    </svg>
+    <!-- 2 waves diagram -->
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <path d="M0,50
+                 C25,0
+                  80,100
+                  100,50"
+              stroke="black" fill="none"/>
+        <path d="M100,50
+                 C125,0
+                  180,75
+                  200,50"
+              stroke="black" fill="none"/>
+    </svg>
+
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <path d="M20,50
+                 100,50"
+              stroke="black" fill="none"/>
+    </svg>
+
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- c for CUBIC??? -->
+        <!-- these coordinates are according to your container -->
+        <!-- Q command Quaratic command gives curve on a point -->
+        <path d="M20,50
+                 Q50,100
+                 100,50"
+              stroke="black" fill="none"/>
+    </svg>
+
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <!-- S command gives two more points but some problem so next lab -->
+        <path d="M10,50
+                 C20,80
+                  40,80
+                 S70,20
+                  90,50
+                  100,50"
+              stroke="black" fill="none"/>
+    </svg>
+
+    <!-- Arcs -->    
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <!-- S command gives two more points but some problem so next lab -->
+        <!-- A x,7,arc rotation,arc size, arc direction -->
+        <path d="M10,50
+                 A50,30,0,1,1
+                  50,100"
+              stroke="black" />
+    </svg>
+
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <!-- S command gives two more points but some problem so next lab -->
+        <!-- A x,7,arc rotation,arc size, arc direction -->
+        <path d="M10,100
+                 A50,30,270,1,1
+                  90,100"
+              stroke="black" />
+    </svg>
+    
+    <svg width="200" height="200">
+        <!-- C is circular and coordnates are x,y so Cx,y e.g., c10,20 -->
+        <!-- these coordinates are according to your container -->
+        <!-- S command gives two more points but some problem so next lab -->
+        <!-- A x,7,arc rotation,arc size, arc direction -->
+        <path d="M10,100
+                 A50,30,0,1,1
+                  90,100"
+              stroke="black" />
+    </svg>
+
+</body>
+</html>

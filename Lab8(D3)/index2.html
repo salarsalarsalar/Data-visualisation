@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab task</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <svg width="350" height="350">
+        <rect id="r1" width="30" height="30" fill="blue"   stroke = "black" stroke-width="3" x="20" y="30"></rect>
+        <rect id="r2" width="30" height="30" fill="red"    stroke = "black" stroke-width="3" x="20" y="80"></rect>
+        <rect id="r3" width="30" height="30" fill="green"  stroke = "black" stroke-width="3" x="20" y="130"></rect>
+        <rect id="r4" width="30" height="30" fill="orange" stroke = "black" stroke-width="3" x="20" y="180"></rect>
+    </svg>
+    <button onclick="Update_location()">Update location</button>
+
+</body>
+
+<script>
+    function Update_location()
+    {
+        var svg = d3.select("svg");
+            svg.selectAll("rect")
+               .attr("rx",50)
+               .attr("x", (d,i) =>50 + 50*i);
+    }
+</script>
+</html>

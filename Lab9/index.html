@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="charts">
+    </div>
+    <svg width="300" height="300">
+        <circle cx="20" cy="20" r="50" fill="red" />
+        <circle cx="20" cy="20" r="100" fill="red" />
+        <circle cx="20" cy="20" r="150" fill="red" />
+        <circle cx="20" cy="20" r="50" fill="yellow" />
+    </svg>
+    <svg width =500 height=200></svg>
+    <g transfrom="translate(50,360)" class="x-axis"></g>
+    <g transfrom="translate(30,10)" class="y-axis"></g>
+    <g transfrom="translate(50,20)" class="bar-charts"></g>
+    <g></g>
+    <g></g>
+    <script>
+        const data = [10, 20, 30, 50, 40];
+        const svg = d3.select("#chart")
+                      .append("svg")
+                      .attr("width",500)
+                      .attr("height",200);
+
+        var svg1 = d3.select("svg");
+
+    //     svg1.append("circle")
+    //    .attr("cx",170)
+    //    .attr("cy",130)
+    //    .attr("r" ,50)
+    //    .attr("fill","orange");
+        
+       // .update
+
+
+
+        //data enter data from data var we created
+        //enter adds new circle in the placeholder, inserrts circle if there is none
+        // (d,i) => 
+        const circles = svg.selectAll("circles")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", (d, i) => (i*80) + 50) // d is data i is index of data
+        .attr("cy", 100)
+        .attr("r", (d) => d)
+        .attr("fill", "blue");
+ 
+        // var bar1 = svg.append("rect")
+        
+        // function update() {
+        //     bar1.transition()
+        //     .duration(2000)
+        //     .ease(d3.easeElastic)
+        //     .attr("height", 100);
+
+        //     bar2.transition()
+        //     .duration(2000)
+        //     .delay(2000)
+        //     .ease(d3.easeLinear);
+
+        //     bar3.transition()
+        //     .duration(2000)
+        //     .ease(d3.easeBounce)
+        //     .attr("height", 100)
+        //     .on("end", function () {
+        //         d3.select(this).attr("fill","red");
+        //     })
+        // }
+        // // var svg = d3.select("svg");
+        // // Append circle 
+        // // svg.append("circle")
+        // // .attr({"cx":5,"cy", 5,"r",15})
+        
+        // // enter DOM < Data
+        // // update DOM > Data
+        // // exit DOM = Data
+
+
+    </script>
+</body>
+</html>
