@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adjacency Matrix to D3 Tree</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+
+    <div id="chart"></div>
+
+    <script>
+
+        // Set up the SVG container with top padding
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", 1000)
+            .attr("height", 1000)
+            .append("g")
+            .attr("transform", "translate(0, 50)");
+
+        d3.csv("1.csv").then(function (matrix) {
+
+            // Extract node names
+            const nodes = Object.keys(matrix[0]).slice(1);
+
+            // Create a hierarchical structure
+            const root = d3.stratify()
+                .id(function (d) { return d.name; })
+                .parentId(function (d) {
+                    const parentIndex = matrix.findIndex(function (row) { return row[d.name] === "1"; });
+                    if (parentIndex !== -1) { return nodes[parentIndex]; }
+                    else { return null; }
+                })
+                (nodes.map(function (name) { return { name: name }; }));
+
+
+            // Create a tree layout
+            const tree = d3.tree().size([1000, 900]); // Adjusted height to accommodate top padding
+
+            // Generate the tree structure
+            const treeData = tree(root);
+
+            // Append links
+            svg.selectAll(".link")
+                .data(treeData.links())
+                .enter().append("path")
+                .attr("fill", "none")
+                .attr("stroke", "")
+                .attr("stroke-opacity", 0.6)
+                .attr("stroke-width", 2)
+                .attr("d", d3.linkVertical()
+                    .x(d => d.x)
+                    .y(d => d.y));
+
+            // Append nodes
+            const nodesGroup = svg.selectAll(".node")
+                .data(treeData.descendants())
+                .enter().append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+
+            nodesGroup.append("circle")
+                .attr("r", 8)
+                .attr("fill", "steelblue")
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 2);
+
+            // Append labels with node names
+            nodesGroup.append("text")
+                .attr("dy", "-1.5em")
+                .attr("font-size", 12)
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("fill", "red")
+                .text(d => d.data.name);
+
+            // Append labels with hierarchy level
+            nodesGroup.append("text")
+                .attr("dy", "1em")
+                .attr("font-size", 10)
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")
+                .attr("fill", "blue")
+                .text(d => "Level " + (d.depth)); // Adjusted to start level numbering from 0
+        });
+    </script>
+
+</body>
+
+</html>
