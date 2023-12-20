@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>D3_zoom</title>
+</head>
+<body>
+    <script>
+        var svg = d3.select("body")
+        .append("svg")
+        .attr("viewbox",0, 0, 300, 300)
+        // .attr("width",300)
+        // .attr("height",300)
+        .attr("background-color","yellow");
+
+        var circleGroup = svg.append("g")
+                    .attr("id","circle-group");
+
+        circleGroup.append("circle")
+        .attr("cx",50)
+        .attr("cy",50)
+        .attr("r",35)
+        .attr("fill","green")
+
+        var zoom = d3.zoom()
+                .on("zoom", function(event)
+                {
+                    circleGroup.attr("transform",event.transform);
+                });
+        svg.call(zoom);
+    </script>
+</body>
+</html>
