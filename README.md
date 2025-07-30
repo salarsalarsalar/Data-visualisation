@@ -33,11 +33,13 @@ These tasks are designed to enhance skills in data binding, SVG manipulation, tr
         
 - **Environment:**
 	- visual studio code
+   
 		[![My Skills](https://skillicons.dev/icons?i=vscode)](https://skillicons.dev)
  
 
 - **Other Tools:**
 	- Github, node.js
+ - 
 	 [![My Skills](https://skillicons.dev/icons?i=github,nodejs)](https://skillicons.dev)
  
 
