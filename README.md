@@ -27,6 +27,7 @@ These tasks are designed to enhance skills in data binding, SVG manipulation, tr
     
 - **Visualization Libraries:**
 	- D3.js
+
      ![My Skills](https://skillicons.dev/icons?i=d3)
     
         
