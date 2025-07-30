@@ -28,19 +28,19 @@ These tasks are designed to enhance skills in data binding, SVG manipulation, tr
 - **Visualization Libraries:**
 	- D3.js
 
-     ![My Skills](https://skillicons.dev/icons?i=d3)
+	![My Skills](https://skillicons.dev/icons?i=d3)
     
         
 - **Environment:**
 	- visual studio code
    
-		[![My Skills](https://skillicons.dev/icons?i=vscode)](https://skillicons.dev)
+	[![My Skills](https://skillicons.dev/icons?i=vscode)](https://skillicons.dev)
  
 
 - **Other Tools:**
 	- Github, node.js
- - 
-	 [![My Skills](https://skillicons.dev/icons?i=github,nodejs)](https://skillicons.dev)
+ 
+ 	[![My Skills](https://skillicons.dev/icons?i=github,nodejs)](https://skillicons.dev)
  
 
 ## 🚀 Setup and Installation
